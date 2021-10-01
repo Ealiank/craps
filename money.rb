@@ -14,6 +14,10 @@ class Money
   end
 
   def withdraw(amount)
-    self.balance = balance - amount
+    if amount <= balance
+      self.balance = balance - amount
+    else
+      puts "You dont have enough money in your bank account. The maximum you can withdraw is #{currency} #{balance}"
+    end
   end
 end
