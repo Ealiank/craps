@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+class WithdrawError < RangeError
+end
+
 # this class is about money.
 class Money
   attr_accessor :balance, :currency
@@ -14,10 +17,11 @@ class Money
   end
 
   def withdraw(amount)
-    if amount <= balance
-      self.balance = balance - amount
-    else
-      puts "You dont have enough money in your bank account. The maximum you can withdraw is #{currency} #{balance}"
+    if amount > balance
+      raise(WithdrawError,
+            "You dont have enough money in your bank account. The maximum you can withdraw is #{currency} #{balance}")
     end
+
+    self.balance = balance - amount
   end
 end
