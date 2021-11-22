@@ -15,7 +15,22 @@ class Craps
     rolls.clear
     dice = Dice.new(6, 2)
     rolls << dice.roll
-    self.game_state = true if last_roll == 7 || last_roll == 11
+    case last_roll
+    when 7, 11 then self.game_state = true
+    when 2, 12 then self.game_state = false
+    else
+      point = last_roll
+      loop do
+        rolls << dice.roll
+        if last_roll == point
+          self.game_state = true
+          break
+        elsif last_roll == 7
+          self.game_state = false
+          break
+        end
+      end
+    end
   end
 
   def last_roll
